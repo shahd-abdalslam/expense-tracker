@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Expense Tracker</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="bg-light">
+
+  <!-- Navbar -->
+  <nav class="navbar navbar-dark bg-dark shadow-sm py-2">
+    <div class="container d-flex justify-content-between align-items-center">
+      <a class="navbar-brand d-flex align-items-center p-0" href="#">
+        <img src="images/logo.png" alt="Expense Tracker Logo" class="brand-logo">
+      </a>
+
+      <button id="darkModeToggle" type="button" class="theme-btn" title="Toggle Theme">
+        <i id="themeIcon" class="bi bi-moon-fill"></i>
+      </button>
+    </div>
+  </nav>
+
+  <div class="container py-4">
+    
+    <!-- Alert Messages Container -->
+    <div id="alertContainer"></div>
+
+<!-- Summary Cards using CSS Grid -->
+<div class="summary-grid mb-4">
+  <div class="card card-summary bg-primary h-100 shadow-sm border-0">
+    <div class="card-body p-4">
+      <span class="text-secondary text-uppercase fw-semibold small">Total Expenses</span>
+      <h2 class="card-text fw-bold mt-2 mb-0" id="totalAmount">$0.00</h2>
+    </div>
+  </div>
+  <div class="card card-summary bg-success h-100 shadow-sm border-0">
+    <div class="card-body p-4">
+      <span class="text-secondary text-uppercase fw-semibold small">Expense Count</span>
+      <h2 class="card-text fw-bold mt-2 mb-0" id="totalCount">0</h2>
+    </div>
+  </div>
+  <div class="card card-summary bg-warning h-100 shadow-sm border-0">
+    <div class="card-body p-4">
+      <span class="text-secondary text-uppercase fw-semibold small">Highest Expense</span>
+      <h2 class="card-text fw-bold mt-2 mb-0" id="highestAmount">$0.00</h2>
+    </div>
+  </div>
+</div>
+
+<!-- Main Content Layout -->
+    <div class="row g-4">
+      <!-- Add Expense Form -->
+      <div class="col-lg-4">
+        <div class="card shadow-sm border-0 rounded-3">
+          <div class="card-header bg-white py-3 border-0 fw-bold fs-5">Add New Expense</div>
+          <div class="card-body p-4 pt-1">
+            <form id="expenseForm">
+              <div class="mb-3">
+                <label for="title" class="form-label text-secondary fs-7">Title</label>
+                <input type="text" class="form-control form-control-lg fs-6" id="title" required placeholder="e.g., Lunch">
+              </div>
+              <div class="mb-3">
+                <label for="amount" class="form-label text-secondary fs-7">Amount</label>
+                <input type="number" step="0.01" class="form-control form-control-lg fs-6" id="amount" required placeholder="0.00">
+              </div>
+              <div class="mb-3">
+                <label for="category" class="form-label text-secondary fs-7">Category</label>
+                <select class="form-select form-select-lg fs-6" id="category" required>
+                  <option value="" selected disabled>Select Category...</option>
+                  <option value="Food">Food</option>
+                  <option value="Transport">Transport</option>
+                  <option value="Bills">Bills</option>
+                  <option value="Entertainment">Entertainment</option>
+                  <option value="Other">Other</option>
+                </select>
+              </div>
+              <div class="mb-4">
+                <label for="date" class="form-label text-secondary fs-7">Date</label>
+                <input type="date" class="form-control form-control-lg fs-6" id="date" required>
+              </div>
+              <button type="submit" class="btn btn-primary btn-lg w-100 fs-6 fw-bold">Add Expense</button>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <!-- Expenses Table & Filter Section -->
+      <div class="col-lg-8">
+        <div class="card shadow-sm border-0 rounded-3">
+          <div class="card-header bg-white py-3 border-0 d-flex justify-content-between align-items-center flex-wrap gap-2">
+            <span class="fw-bold fs-5">Expense List</span>
+            
+            <!-- Category Filter -->
+            <div class="d-flex align-items-center gap-2">
+              <label for="filterCategory" class="form-label mb-0 text-secondary small">Filter:</label>
+              <select id="filterCategory" class="form-select form-select-sm rounded-2" style="min-width: 130px;">
+                <option value="All">All</option>
+                <option value="Food">Food</option>
+                <option value="Transport">Transport</option>
+                <option value="Bills">Bills</option>
+                <option value="Entertainment">Entertainment</option>
+                <option value="Other">Other</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="card-body p-0">
+            <!-- Loading Spinner -->
+            <div id="loadingSpinner" class="text-center my-4 d-none">
+              <div class="spinner-border text-primary" role="status">
+                <span class="visually-hidden">Loading...</span>
+              </div>
+            </div>
+
+            <!-- Table -->
+            <div class="table-responsive">
+              <table class="table table-hover align-middle mb-0">
+                <thead class="table-light">
+                  <tr>
+                    <th class="ps-4">Title</th>
+                    <th>Amount</th>
+                    <th>Category</th>
+                    <th>Date</th>
+                    <th class="text-end pe-4">Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="expensesTableBody">
+                  <!-- Dynamic rows from app.js -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Edit Expense Modal -->
+  <div class="modal fade" id="editExpenseModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content border-0 shadow">
+        <div class="modal-header border-0 pb-0">
+          <h5 class="modal-title fw-bold">Edit Expense</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body p-4">
+          <form id="editExpenseForm">
+            <input type="hidden" id="editId">
+            <div class="mb-3">
+              <label for="editTitle" class="form-label text-secondary small">Title</label>
+              <input type="text" class="form-control" id="editTitle" required>
+            </div>
+            <div class="mb-3">
+              <label for="editAmount" class="form-label text-secondary small">Amount</label>
+              <input type="number" step="0.01" class="form-control" id="editAmount" required>
+            </div>
+            <div class="mb-3">
+              <label for="editCategory" class="form-label text-secondary small">Category</label>
+              <select class="form-select" id="editCategory" required>
+                <option value="Food">Food</option>
+                <option value="Transport">Transport</option>
+                <option value="Bills">Bills</option>
+                <option value="Entertainment">Entertainment</option>
+                <option value="Other">Other</option>
+              </select>
+            </div>
+            <div class="mb-4">
+              <label for="editDate" class="form-label text-secondary small">Date</label>
+              <input type="date" class="form-control" id="editDate" required>
+            </div>
+            <button type="submit" class="btn btn-primary w-100 fw-bold">Save Changes</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

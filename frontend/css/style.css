@@ -1,0 +1,155 @@
+:root {
+  --primary: #4f46e5;
+  --danger: #dc2626;
+  --bg-main: #f8fafc;
+  --card-bg: #ffffff;
+  --border: #e2e8f0;
+  --text-primary: #0f172a;
+  --text-muted: #64748b;
+}
+
+body {
+  background-color: var(--bg-main) !important;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  color: var(--text-primary);
+}
+
+.navbar { background-color: var(--text-primary) !important; }
+
+/* Summary cards styling */
+.bg-primary, .bg-success, .bg-warning {
+  background-color: var(--card-bg) !important;
+  color: var(--text-primary) !important;
+  border: 1px solid var(--border) !important;
+}
+
+/* Card titles color based on background class */
+.card-summary.bg-primary h2 { color: var(--primary) !important; }
+.card-summary.bg-success h2 { color: #10b981 !important; }
+.card-summary.bg-warning h2 { color: #f59e0b !important; }
+
+/* Category badges */
+.badge {
+  font-weight: 500;
+  padding: 0.4em 0.75em;
+  border-radius: 6px;
+  border: 1px solid transparent;
+}
+.badge.bg-primary   { background-color: #eef2ff !important; color: #4338ca !important; border-color: #c7d2fe !important; }
+.badge.bg-info      { background-color: #ecfeff !important; color: #0e7490 !important; border-color: #a5f3fc !important; }
+.badge.bg-danger    { background-color: #fef2f2 !important; color: #b91c1c !important; border-color: #fecaca !important; }
+.badge.bg-warning   { background-color: #fffbeb !important; color: #b45309 !important; border-color: #fde68a !important; }
+.badge.bg-secondary { background-color: #f1f5f9 !important; color: #475569 !important; border-color: #e2e8f0 !important; }
+
+/* Table base styles */
+.table thead th {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--text-muted);
+  background-color: var(--bg-main) !important;
+  border-bottom: 1px solid var(--border);
+}
+.table td { padding: 1rem 0.75rem; border-color: #f1f5f9; }
+
+/* Buttons */
+.btn-primary { background-color: var(--primary) !important; border-color: var(--primary) !important; }
+.btn-primary:hover { background-color: #4338ca !important; border-color: #4338ca !important; }
+.btn-outline-danger { color: var(--danger); border-color: #fecaca; }
+.btn-outline-danger:hover { background-color: var(--danger); border-color: var(--danger); color: #fff; }
+
+/* Summary grid (CSS Grid Requirement) */
+.summary-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1rem;
+}
+
+/* ==========================================
+   Dark Mode Styles
+========================================== */
+body.dark-mode {
+  background-color: #0f172a !important;
+  color: #f8fafc !important;
+}
+
+body.dark-mode .navbar {
+  background-color: #1e293b !important;
+  border-bottom: 1px solid #334155;
+}
+
+body.dark-mode .card,
+body.dark-mode .card-header,
+body.dark-mode .modal-content {
+  background-color: #1e293b !important;
+  color: #f8fafc !important;
+  border-color: #334155 !important;
+}
+
+body.dark-mode .form-control,
+body.dark-mode .form-select {
+  background-color: #0f172a !important;
+  color: #f8fafc !important;
+  border-color: #334155 !important;
+}
+
+body.dark-mode .form-control::placeholder {
+  color: #64748b !important;
+}
+
+/* Dark mode table */
+body.dark-mode .table-responsive,
+body.dark-mode .table,
+body.dark-mode .table tbody tr,
+body.dark-mode .table td {
+  background-color: #1e293b !important;
+  color: #f8fafc !important;
+  border-color: #334155 !important;
+}
+
+body.dark-mode .table thead th {
+  background-color: #0f172a !important;
+  color: #94a3b8 !important;
+  border-color: #334155 !important;
+}
+
+body.dark-mode .table-hover tbody tr:hover {
+  background-color: #334155 !important;
+  color: #ffffff !important;
+}
+
+
+/* Custom Theme Toggle Button */
+.theme-btn {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: transparent !important;
+  border: 1px solid rgba(255, 255, 255, 0.4) !important;
+  color: #ffffff !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+.theme-btn i {
+  font-size: 1.1rem;
+  color: #ffffff !important;
+}
+
+.theme-btn:hover {
+  background-color: rgba(255, 255, 255, 0.15) !important;
+  border-color: #ffffff !important;
+}
+
+/* Logo Sizing & Alignment */
+.brand-logo {
+  height: 32px; 
+  width: auto;
+  object-fit: contain;
+  transform: none !important;
+  margin: 0;
+  display: block;
+}
